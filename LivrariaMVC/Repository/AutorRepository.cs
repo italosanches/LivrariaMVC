@@ -16,7 +16,7 @@ namespace LivrariaMVC.Repository
         public async Task<int> CreateAsync(Autor autor)
         {
             try 
-            { 
+            {
               await  _context.Autores.AddAsync(autor); 
               await  _context.SaveChangesAsync();
                return autor.AutorId;

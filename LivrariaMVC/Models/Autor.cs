@@ -11,9 +11,10 @@ namespace LivrariaMVC.Models
         {
             
         }
-        public Autor(string name)
+        public Autor(string name, string urlImg = "wwwroot/Default/img/default_img.svg")
         {
             AutorName = name;
+            AutorImgUrl = urlImg;
         }
         [Key]
         public int AutorId { get; set; }
