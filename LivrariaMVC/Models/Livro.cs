@@ -21,7 +21,7 @@ namespace LivrariaMVC.Models
         [Display(Name = "Descrição do Livro")]
         [Column(TypeName = "varchar(100)")]
         [MinLength(1, ErrorMessage = "O nome deve conter no minimo uma letra")]
-        public string LivroDescricao { get; set; }
+        public string? LivroDescricao { get; set; }
 
         [Display(Name = "Quantidade de paginas.")]
         public int LivroQuantidadePaginas { get; set; }
@@ -30,11 +30,11 @@ namespace LivrariaMVC.Models
         public DateTime LivroDataPublicacao { get; set; }
 
 
-        public string LivroImgUrl { get; set; }
+        public string? LivroImgUrl { get; set; }
 
-        
-        public IEnumerable<LivroAutor> LivrosAutores { get; set; }
-        public IEnumerable<LivroGenero> LivrosGeneros { get; set; }
+
+        public IEnumerable<LivroAutor> LivrosAutores { get; set; } = new List<LivroAutor>();
+        public IEnumerable<LivroGenero> LivrosGeneros { get; set; } = new List<LivroGenero>();
 
 
         public StatusLivro StatusLivro { get; set; }
