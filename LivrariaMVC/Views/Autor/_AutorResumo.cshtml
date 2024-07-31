@@ -1,6 +1,19 @@
 ﻿@model Autor;
 
 <form asp-action="Create" asp-controller="Autor" method="post" enctype="multipart/form-data">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index:1000;">
+            <div id="fail-toast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @Html.ValidationSummary(true)
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-3 mb-3">
             <label asp-for=AutorName class="form-label"></label>
@@ -9,14 +22,20 @@
         </div>
         <div class="col-6 mb-3">
             <label asp-for=AutorImgUrl class="form-label">Imagem Autor</label>
-            <input class="form-control" type="file" name="ImageFile" accept=".jpg,.jpeg,.png">
+            <input class="form-control" type="file" name="ImageFile" accept=".jpg,.jpeg,.png, .svg">
         </div>
     </div>
-   
+
     <button class="btn-primary" type="submit">Submit</button>
 </form>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successToast = document.getElementById('fail-toast');
+        if (successToast) {
+            var toast = new bootstrap.Toast(successToast, {
+                delay: 5000
+            });
+            toast.show();
+        }
+    });
+</script>
