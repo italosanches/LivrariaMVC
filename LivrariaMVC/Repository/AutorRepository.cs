@@ -11,7 +11,7 @@ namespace LivrariaMVC.Repository
         {
             _context = context;   
         }
-        public IEnumerable<Autor> Autores => _context.Autores.AsNoTracking().ToList();  
+        public IEnumerable<Autor> Autores => _context.Autores.AsNoTracking().OrderBy(x=> x.AutorId).ToList(); 
 
         public async Task<int> CreateAsync(Autor autor)
         {
@@ -50,16 +50,25 @@ namespace LivrariaMVC.Repository
             return autor;
         }
 
-        public async Task<Autor> GetByNameAsync(string name)
+        public async Task<Autor> GetByNameAsync(string? name)
         {
-            Autor? autor = await _context.Autores.AsNoTracking().FirstOrDefaultAsync(x => x.AutorName.ToLower() == name.ToLower());
-            return autor;
+			return await _context.Autores.AsNoTracking().FirstOrDefaultAsync(x => x.AutorName.ToLower().Trim() == name.ToLower().Trim());
+           
 
         }
 
         public async Task<bool> UpdateAsync(Autor autor)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Update(autor);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception)
+            {
+                throw new Exception("Erro ao fazer update");
+            }
         }
 
         
