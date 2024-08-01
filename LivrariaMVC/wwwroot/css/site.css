@@ -43,3 +43,10 @@ body {
     background-color: var(--branco);
     min-height: 78vh;
 }
+
+.table_default {
+    background-color: var(--marrom-secundary);
+    padding: 0px 30px;
+    margin: 0px 30px;
+    height: 70vh;
+}
