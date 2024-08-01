@@ -2,8 +2,8 @@
 using LivrariaMVC.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using LivrariaMVC.Helpers;
-using System.IO;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+using Canducci.Pagination;
 
 namespace LivrariaMVC.Controllers
 {
@@ -17,13 +17,17 @@ namespace LivrariaMVC.Controllers
         {
             _autorRepository = autorRepository;
         }
-        public IActionResult Index()
-        {
-            var listAutores = _autorRepository.Autores.ToList();
-            return View(listAutores);
-        }
+       
+		public async Task<IActionResult> Index(int? current)
+		{
+			
+            var autores = _autorRepository.Autores.ToPaginated(current ?? 1,8); // Carregue a lista de dados
+			
 
-        public IActionResult Create()
+			return View(autores);
+		}
+
+		public async Task<IActionResult> Create()
         {
             return View();
         }
