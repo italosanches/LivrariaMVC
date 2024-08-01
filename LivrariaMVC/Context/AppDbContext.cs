@@ -15,6 +15,10 @@ namespace LivrariaMVC
         public DbSet<Autor> Autores { get; set; }
         public DbSet<LivroAutor> LivroAutores { get; set; }
 
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<LivroGenero> LivroGeneros { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
