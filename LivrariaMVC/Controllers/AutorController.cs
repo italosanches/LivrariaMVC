@@ -2,6 +2,7 @@
 using LivrariaMVC.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using LivrariaMVC.Helpers;
+using System.IO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LivrariaMVC.Controllers
@@ -73,43 +74,60 @@ namespace LivrariaMVC.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit([Bind("AutorName")] Autor autor, IFormFile? imageFile)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(autor.AutorName))
-                {
-                    var verificarAutor = await _autorRepository.GetByNameAsync(autor.AutorName);
-                    if (verificarAutor != null && verificarAutor.AutorId == autor.AutorId)
-                    {
-                        ModelState.AddModelError("", $"Nao foi possivel inserir o autor, nome ja existe");
-                        return View(autor);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {                              //tratamento do arquivo
-                    autor.AutorImgUrl = await FileHelper.ProcessarImgUploadAsync(imageFile, UploadFolderPath) ?? DefaultImgPath;
-                    await _autorRepository.CreateAsync(autor);
-                    TempData["SucessMessage"] = "Autor criado";
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", $"Nao foi possivel inserir o autor,verifique.");
-                    return View(autor);
-                }
 
 
-            }
-            catch (Exception ex)
-            {
+        //[HttpGet]
 
-                ModelState.AddModelError("", $"Erro ao inserir autor {ex.Message}");
-                return View(autor);
-            }
-        }
+        //public async Task<IActionResult> Edit(int id)
+        //{
+
+        //}
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Edit([Bind("AutorName,AutorId")] Autor autor, IFormFile? imageFile)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(autor.AutorName))
+        //        {
+        //            var verificarAutor = await _autorRepository.GetByNameAsync(autor.AutorName);
+        //            if (verificarAutor != null && verificarAutor.AutorId == autor.AutorId)
+        //            {
+        //                ModelState.AddModelError("", $"Nao foi possivel alterar o autor, nome ja existe");
+        //                return View(autor);
+        //            }
+                   
+        //        }
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            var file = new FileInfo(autor.AutorImgUrl);
+        //            if (file.Exists)
+        //            {
+        //                file.Delete();
+        //            }
+        //            //tratamento do arquivo
+        //            autor.AutorImgUrl = await FileHelper.ProcessarImgUploadAsync(imageFile, UploadFolderPath) ?? DefaultImgPath;
+        //            await _autorRepository.CreateAsync(autor);
+        //            TempData["SucessMessage"] = "Autor criado";
+        //            return RedirectToAction("Index");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", $"Nao foi possivel inserir o autor,verifique.");
+        //            return View(autor);
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        ModelState.AddModelError("", $"Erro ao inserir autor {ex.Message}");
+        //        return View(autor);
+        //    }
+        //}
 
     }
 }
