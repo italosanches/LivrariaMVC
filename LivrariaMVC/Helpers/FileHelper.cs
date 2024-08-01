@@ -1,24 +1,27 @@
-﻿namespace LivrariaMVC.Helpers
+﻿using Microsoft.AspNetCore.Http;
+
+namespace LivrariaMVC.Helpers
 {
     public static class FileHelper
     {
         private static readonly string[] SupportedImageTypes = { ".jpg", ".jpeg", ".png", ".svg" };
-        public static async Task<string?> ProcessarImgUploadAsync(IFormFile FormFile, string UploadFolderPath)
+        public static async Task<string?> ProcessarImgUploadAsync(IFormFile formFile, string uploadFolderPath)
         {
-            if (FormFile == null || FormFile.Length < 0)
+            if (formFile == null || formFile.Length < 0)
             {
                 return null;
             }
             else
             {
-                if(IsSupportedImageTypes(FormFile))
+                if(IsSupportedImageTypes(formFile))
                 {
-                    var filePath = Path.Combine(UploadFolderPath, Path.GetFileName(FormFile.FileName));
+                    var filePath = Path.Combine(uploadFolderPath, Guid.NewGuid() + Path.GetExtension(formFile.FileName));
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await FormFile.CopyToAsync(stream);
+                        await formFile.CopyToAsync(stream);
+                        
                     }
-                    return "/uploads/" + Path.GetFileName(FormFile.FileName);
+                    return "/uploads/" + Path.GetFileName(formFile.FileName);
                 }
                 return "invalido"; 
             }
