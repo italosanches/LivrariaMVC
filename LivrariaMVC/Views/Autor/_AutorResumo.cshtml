@@ -1,6 +1,6 @@
 ﻿@model Autor;
 
-<form asp-action="Create" asp-controller="Autor" method="post" enctype="multipart/form-data">
+<form asp-action="@ViewBag.Mode" asp-controller="Autor" method="post" enctype="multipart/form-data">
     @if (!ViewData.ModelState.IsValid)
     {
         <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index:1000;">
