@@ -10,7 +10,7 @@ namespace LivrariaMVC.Models
         public int GeneroId { get; set; }
 
 
-        [Required(ErrorMessage = "O nome do genero é obrigatorio.")]
+        [Required(ErrorMessage = "O genero é obrigatorio.")]
         [Display(Name = "Genero de Livro")]
         [Column(TypeName = "varchar(50)")]
         [MinLength(1, ErrorMessage = "O nome deve conter no minimo uma letra")]
